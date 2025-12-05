@@ -252,7 +252,7 @@ export default function OrdersPage() {
                           )}
                         </span>
                         <span className="font-medium">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          ${(Number(item.price) * item.quantity).toFixed(2)}
                         </span>
                       </div>
                     ))}

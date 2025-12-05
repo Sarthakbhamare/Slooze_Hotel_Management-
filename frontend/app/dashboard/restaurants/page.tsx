@@ -100,7 +100,7 @@ export default function RestaurantsPage() {
   const getTotalPrice = () => {
     return Object.entries(cart).reduce((total, [itemId, qty]) => {
       const item = menuItems.find(i => i.id === itemId);
-      return total + (item ? item.price * qty : 0);
+      return total + (item ? Number(item.price) * qty : 0);
     }, 0);
   };
 
@@ -267,7 +267,7 @@ export default function RestaurantsPage() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xl font-bold text-gray-900">
-                        ${item.price.toFixed(2)}
+                        ${Number(item.price).toFixed(2)}
                       </span>
                       {quantity === 0 ? (
                         <button
@@ -336,7 +336,7 @@ export default function RestaurantsPage() {
                     return (
                       <div key={itemId} className="flex justify-between text-gray-700">
                         <span>{item.name} x {quantity}</span>
-                        <span>${(item.price * quantity).toFixed(2)}</span>
+                        <span>${(Number(item.price) * quantity).toFixed(2)}</span>
                       </div>
                     );
                   })}
