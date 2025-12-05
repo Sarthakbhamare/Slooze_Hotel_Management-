@@ -141,6 +141,10 @@ async function main() {
 
   console.log('Restaurants created');
 
+  // Delete existing menu items to avoid duplicates
+  await prisma.menuItem.deleteMany({});
+  console.log('Existing menu items cleared');
+
   // Create menu items for Spice Garden (India)
   await prisma.menuItem.createMany({
     data: [
