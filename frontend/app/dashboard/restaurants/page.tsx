@@ -214,7 +214,7 @@ export default function RestaurantsPage() {
                       {restaurant.country}
                     </span>
                   </div>
-                  <p className="text-gray-600 text-sm mb-4">{restaurant.address}</p>
+                  <p className="text-gray-600 text-sm mb-4">{restaurant.description}</p>
                   <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
                     View Menu
                   </button>
@@ -229,7 +229,7 @@ export default function RestaurantsPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">{selectedRestaurant.name}</h2>
-                  <p className="text-gray-600 mt-1">{selectedRestaurant.address}</p>
+                  <p className="text-gray-600 mt-1">{selectedRestaurant.description}</p>
                   <span className="inline-block mt-2 px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded">
                     {selectedRestaurant.country}
                   </span>

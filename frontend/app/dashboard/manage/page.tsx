@@ -13,7 +13,7 @@ export default function ManagePage() {
   const [error, setError] = useState('');
   const [showAddRestaurant, setShowAddRestaurant] = useState(false);
   const [showAddMenuItem, setShowAddMenuItem] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ name: '', address: '', country: 'INDIA' });
+  const [formData, setFormData] = useState({ name: '', description: '', country: 'INDIA' });
   const [menuFormData, setMenuFormData] = useState({ name: '', description: '', price: '', category: '' });
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function ManagePage() {
 
       if (!response.ok) throw new Error('Failed to create restaurant');
 
-      setFormData({ name: '', address: '', country: user?.role === 'ADMIN' ? 'INDIA' : user?.country || 'INDIA' });
+      setFormData({ name: '', description: '', country: user?.role === 'ADMIN' ? 'INDIA' : user?.country || 'INDIA' });
       setShowAddRestaurant(false);
       loadRestaurants();
       alert('Restaurant created successfully!');
@@ -205,12 +205,12 @@ export default function ManagePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                  <input
-                    type="text"
-                    value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     required
+                    rows={3}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   />
                 </div>
@@ -251,7 +251,7 @@ export default function ManagePage() {
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900">{restaurant.name}</h3>
-                  <p className="text-gray-600">{restaurant.address}</p>
+                  <p className="text-gray-600">{restaurant.description}</p>
                   <span className="inline-block mt-2 px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded">
                     {restaurant.country}
                   </span>
