@@ -59,14 +59,17 @@ export default function RestaurantsPage() {
 
   const loadMenu = async (restaurantId: string) => {
     try {
+      setError('');
       const restaurant = restaurants.find(r => r.id === restaurantId);
       if (restaurant) {
         setSelectedRestaurant(restaurant);
         const items = await api.getMenuItems(restaurantId);
-        setMenuItems(items);
+        setMenuItems(items || []);
       }
     } catch (err: any) {
+      console.error('Failed to load menu:', err);
       setError(err.message || 'Failed to load menu');
+      setMenuItems([]);
     }
   };
 
@@ -248,9 +251,10 @@ export default function RestaurantsPage() {
 
             {/* Menu Items */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {menuItems.map((item) => {
-                const quantity = cart[item.id] || 0;
-                return (
+              {menuItems && menuItems.length > 0 ? (
+                menuItems.map((item) => {
+                  const quantity = cart[item.id] || 0;
+                  return (
                   <div key={item.id} className="bg-white rounded-lg shadow-lg p-6">
                     <div className="mb-4">
                       <h3 className="text-lg font-semibold text-gray-900">{item.name}</h3>
@@ -292,7 +296,12 @@ export default function RestaurantsPage() {
                     </div>
                   </div>
                 );
-              })}
+              })
+              ) : (
+                <div className="col-span-3 text-center py-12">
+                  <p className="text-gray-500 text-lg">No menu items available for this restaurant.</p>
+                </div>
+              )}
             </div>
 
             {/* Checkout Section */}
