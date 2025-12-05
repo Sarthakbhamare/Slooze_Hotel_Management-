@@ -19,14 +19,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Check if user is logged in on mount
-    const token = localStorage.getItem('token');
-    if (token) {
-      api.getProfile()
-        .then(setUser)
-        .catch(() => {
-          localStorage.removeItem('token');
-        })
-        .finally(() => setIsLoading(false));
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        api.getProfile()
+          .then(setUser)
+          .catch(() => {
+            localStorage.removeItem('token');
+          })
+          .finally(() => setIsLoading(false));
+      } else {
+        setIsLoading(false);
+      }
     } else {
       setIsLoading(false);
     }
