@@ -11,6 +11,12 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log('Seeding database...');
 
+  // Delete existing data in correct order (respecting foreign key constraints)
+  await prisma.orderItem.deleteMany({});
+  await prisma.order.deleteMany({});
+  await prisma.menuItem.deleteMany({});
+  console.log('Existing orders and menu items cleared');
+
   // Hash password for all users
   const hashedPassword = await bcrypt.hash('Password123!', 10);
 
@@ -140,10 +146,6 @@ async function main() {
   });
 
   console.log('Restaurants created');
-
-  // Delete existing menu items to avoid duplicates
-  await prisma.menuItem.deleteMany({});
-  console.log('Existing menu items cleared');
 
   // Create menu items for Spice Garden (India) - Authentic Indian Cuisine
   await prisma.menuItem.createMany({
