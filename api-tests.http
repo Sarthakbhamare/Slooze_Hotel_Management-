@@ -1,0 +1,139 @@
+### Food Ordering API - REST Client Tests
+### Install the "REST Client" extension in VS Code to use this file
+### Click "Send Request" above each request to execute it
+
+### Variables
+@baseUrl = http://localhost:3001/api
+@token = YOUR_TOKEN_HERE
+
+### ============================================
+### AUTHENTICATION
+### ============================================
+
+### 1. Login as Admin (Nick Fury)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "nick.fury@shield.com",
+  "password": "Password123!"
+}
+
+### 2. Login as Manager India (Captain Marvel)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "carol.danvers@shield.com",
+  "password": "Password123!"
+}
+
+### 3. Login as Manager America (Captain America)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "steve.rogers@shield.com",
+  "password": "Password123!"
+}
+
+### 4. Login as Member (Thanos)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "thanos@shield.com",
+  "password": "Password123!"
+}
+
+### 5. Get Profile (After login, replace YOUR_TOKEN_HERE above)
+GET {{baseUrl}}/auth/profile
+Authorization: Bearer {{token}}
+
+### ============================================
+### RESTAURANTS
+### ============================================
+
+### 6. Get All Restaurants (Country-filtered)
+GET {{baseUrl}}/restaurants
+Authorization: Bearer {{token}}
+
+### 7. Get Specific Restaurant (Replace with actual ID from above)
+GET {{baseUrl}}/restaurants/550e8400-e29b-41d4-a716-446655440001
+Authorization: Bearer {{token}}
+
+### 8. Get Restaurant Menu
+GET {{baseUrl}}/restaurants/550e8400-e29b-41d4-a716-446655440001/menu
+Authorization: Bearer {{token}}
+
+### ============================================
+### ORDERS
+### ============================================
+
+### 9. Create Order (Replace menuItemId with actual ID)
+POST {{baseUrl}}/orders
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "restaurantId": "550e8400-e29b-41d4-a716-446655440001",
+  "items": [
+    {
+      "menuItemId": "REPLACE_WITH_MENU_ITEM_ID",
+      "quantity": 2
+    }
+  ]
+}
+
+### 10. Get All Orders
+GET {{baseUrl}}/orders
+Authorization: Bearer {{token}}
+
+### 11. Get Specific Order (Replace with actual order ID)
+GET {{baseUrl}}/orders/ORDER_ID
+Authorization: Bearer {{token}}
+
+### 12. Checkout Order (Replace with actual order ID)
+POST {{baseUrl}}/orders/ORDER_ID/checkout
+Authorization: Bearer {{token}}
+
+### 13. Cancel Order (Admin/Manager only - Replace with actual order ID)
+PATCH {{baseUrl}}/orders/ORDER_ID/cancel
+Authorization: Bearer {{token}}
+
+### ============================================
+### PAYMENT METHODS
+### ============================================
+
+### 14. Get Payment Methods
+GET {{baseUrl}}/payment-methods
+Authorization: Bearer {{token}}
+
+### 15. Create Payment Method (Admin only)
+POST {{baseUrl}}/payment-methods
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "type": "CREDIT_CARD",
+  "cardNumber": "4111111111111111",
+  "cardHolderName": "Test User",
+  "expiryDate": "12/25",
+  "isDefault": true
+}
+
+### ============================================
+### RBAC TESTS
+### ============================================
+
+### TEST 1: Login as Member and try to cancel order (Should FAIL with 403)
+# First login as Thanos, then try to cancel any order
+
+### TEST 2: Login as India Manager and get restaurants (Should only see Indian restaurants)
+# Login as Captain Marvel, then get restaurants
+
+### TEST 3: Login as America Manager and get restaurants (Should only see American restaurants)
+# Login as Captain America, then get restaurants
+
+### TEST 4: Login as Admin and get restaurants (Should see ALL restaurants)
+# Login as Nick Fury, then get restaurants
