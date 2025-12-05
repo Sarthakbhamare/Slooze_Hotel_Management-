@@ -57,12 +57,12 @@ export default function RestaurantsPage() {
     }
   };
 
-  const loadMenu = async (restaurantId: number) => {
+  const loadMenu = async (restaurantId: string) => {
     try {
       const restaurant = restaurants.find(r => r.id === restaurantId);
       if (restaurant) {
         setSelectedRestaurant(restaurant);
-        const items = await api.getMenuItems(restaurantId);
+        const items = await api.getMenuItems(parseInt(restaurantId));
         setMenuItems(items);
       }
     } catch (err: any) {
@@ -70,17 +70,17 @@ export default function RestaurantsPage() {
     }
   };
 
-  const addToCart = (itemId: number) => {
+  const addToCart = (itemId: string) => {
     setCart(prev => ({
       ...prev,
-      [itemId.toString()]: (prev[itemId.toString()] || 0) + 1
+      [itemId]: (prev[itemId] || 0) + 1
     }));
   };
 
-  const removeFromCart = (itemId: number) => {
+  const removeFromCart = (itemId: string) => {
     setCart(prev => {
       const newCart = { ...prev };
-      const key = itemId.toString();
+      const key = itemId;
       if (newCart[key] > 1) {
         newCart[key]--;
       } else {
@@ -96,7 +96,7 @@ export default function RestaurantsPage() {
 
   const getTotalPrice = () => {
     return Object.entries(cart).reduce((total, [itemId, qty]) => {
-      const item = menuItems.find(i => i.id.toString() === itemId);
+      const item = menuItems.find(i => i.id === itemId);
       return total + (item ? parseFloat(item.price.toString()) * qty : 0);
     }, 0);
   };
@@ -116,7 +116,7 @@ export default function RestaurantsPage() {
       }));
 
       const order = await api.createOrder({
-        restaurantId: selectedRestaurant.id.toString(),
+        restaurantId: selectedRestaurant.id,
         items: orderItems,
         paymentMethodId: selectedPaymentMethod
       });
@@ -249,7 +249,7 @@ export default function RestaurantsPage() {
             {/* Menu Items */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {menuItems.map((item) => {
-                const quantity = cart[item.id.toString()] || 0;
+                const quantity = cart[item.id] || 0;
                 return (
                   <div key={item.id} className="bg-white rounded-lg shadow-lg p-6">
                     <div className="mb-4">
@@ -322,7 +322,7 @@ export default function RestaurantsPage() {
 
                 <div className="space-y-2 mb-4">
                   {Object.entries(cart).map(([itemId, quantity]) => {
-                    const item = menuItems.find(i => i.id.toString() === itemId);
+                    const item = menuItems.find(i => i.id === itemId);
                     if (!item) return null;
                     return (
                       <div key={itemId} className="flex justify-between text-gray-700">

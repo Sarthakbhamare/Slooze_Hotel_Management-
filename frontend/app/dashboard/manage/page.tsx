@@ -4,6 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { MenuItem } from '@/types';
 
 export default function ManagePage() {
   const { user, isLoading: authLoading } = useAuth();
@@ -328,7 +329,7 @@ export default function ManagePage() {
               <div className="border-t pt-4">
                 <h4 className="font-semibold mb-3 text-gray-900">Menu Items ({restaurant.menuItems?.length || 0})</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {restaurant.menuItems?.map((item: any) => (
+                  {restaurant.menuItems?.map((item: MenuItem) => (
                     <div key={item.id} className="border border-gray-200 rounded-lg p-4 bg-white">
                       <div className="flex justify-between items-start mb-2">
                         <div className="flex-1">
