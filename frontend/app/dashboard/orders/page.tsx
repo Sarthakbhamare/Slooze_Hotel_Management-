@@ -13,8 +13,8 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [cancellingOrderId, setCancellingOrderId] = useState<number | null>(null);
-  const [updatingOrderId, setUpdatingOrderId] = useState<number | null>(null);
+  const [cancellingOrderId, setCancellingOrderId] = useState<string | null>(null);
+  const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -41,14 +41,14 @@ export default function OrdersPage() {
     }
   };
 
-  const handleCancelOrder = async (orderId: number) => {
+  const handleCancelOrder = async (orderId: string) => {
     if (!window.confirm('Are you sure you want to cancel this order?')) {
       return;
     }
 
     try {
       setCancellingOrderId(orderId);
-      await api.cancelOrder(orderId.toString());
+      await api.cancelOrder(orderId);
       // Reload orders to get updated status
       await loadOrders();
       alert('Order cancelled successfully!');
@@ -63,10 +63,10 @@ export default function OrdersPage() {
     }
   };
 
-  const handleUpdateStatus = async (orderId: any, newStatus: string) => {
+  const handleUpdateStatus = async (orderId: string, newStatus: string) => {
     try {
       setUpdatingOrderId(orderId);
-      await api.updateOrderStatus(orderId.toString(), newStatus);
+      await api.updateOrderStatus(orderId, newStatus);
       await loadOrders();
       alert(`Order status updated to ${newStatus}!`);
       setError('');
