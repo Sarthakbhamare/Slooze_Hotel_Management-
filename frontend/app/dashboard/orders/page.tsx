@@ -66,7 +66,7 @@ export default function OrdersPage() {
   const handleUpdateStatus = async (orderId: any, newStatus: string) => {
     try {
       setUpdatingOrderId(orderId);
-      await api.updateOrderStatus(orderId, newStatus);
+      await api.updateOrderStatus(orderId.toString(), newStatus);
       await loadOrders();
       alert(`Order status updated to ${newStatus}!`);
       setError('');
