@@ -52,7 +52,7 @@ class ApiClient {
     return this.request<any[]>(`/restaurants/${id}/menu`);
   }
 
-  async getMenuItems(restaurantId: number) {
+  async getMenuItems(restaurantId: string) {
     return this.request<any[]>(`/restaurants/${restaurantId}/menu`);
   }
 

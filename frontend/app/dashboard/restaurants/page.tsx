@@ -15,7 +15,7 @@ export default function RestaurantsPage() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [cart, setCart] = useState<{ [key: number]: number }>({});
+  const [cart, setCart] = useState<{ [key: string]: number }>({});
   const [paymentMethods, setPaymentMethods] = useState<any[]>([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('');
 
@@ -62,7 +62,7 @@ export default function RestaurantsPage() {
       const restaurant = restaurants.find(r => r.id === restaurantId);
       if (restaurant) {
         setSelectedRestaurant(restaurant);
-        const items = await api.getMenuItems(parseInt(restaurantId));
+        const items = await api.getMenuItems(restaurantId);
         setMenuItems(items);
       }
     } catch (err: any) {

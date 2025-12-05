@@ -243,7 +243,7 @@ export default function OrdersPage() {
                 <div className="border-t pt-4">
                   <h4 className="font-semibold text-gray-900 mb-3">Order Items:</h4>
                   <div className="space-y-2">
-                    {order.items?.map((item) => (
+                    {order.orderItems?.map((item) => (
                       <div key={item.id} className="flex justify-between text-gray-700">
                         <span>
                           {item.menuItem?.name} x {item.quantity}
