@@ -349,7 +349,7 @@ export default function ManagePage() {
                           ✕
                         </button>
                       </div>
-                      <p className="text-lg font-bold text-blue-600 mt-2">${parseFloat(item.price).toFixed(2)}</p>
+                      <p className="text-lg font-bold text-blue-600 mt-2">${item.price.toFixed(2)}</p>
                     </div>
                   ))}
                 </div>

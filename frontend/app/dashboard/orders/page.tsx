@@ -252,7 +252,7 @@ export default function OrdersPage() {
                           )}
                         </span>
                         <span className="font-medium">
-                          ${(parseFloat(item.price.toString()) * item.quantity).toFixed(2)}
+                          ${(item.price * item.quantity).toFixed(2)}
                         </span>
                       </div>
                     ))}
