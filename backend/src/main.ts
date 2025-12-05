@@ -7,7 +7,12 @@ async function bootstrap() {
   
   // Enable CORS
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://slooze-hotel-management-qrnkkhppt-sarthaks-projects-388cc270.vercel.app',
+      /\.vercel\.app$/
+    ],
     credentials: true,
   });
 
