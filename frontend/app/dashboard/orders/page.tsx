@@ -48,7 +48,7 @@ export default function OrdersPage() {
 
     try {
       setCancellingOrderId(orderId);
-      await api.cancelOrder(orderId);
+      await api.cancelOrder(orderId.toString());
       // Reload orders to get updated status
       await loadOrders();
       alert('Order cancelled successfully!');
