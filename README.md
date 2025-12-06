@@ -318,7 +318,7 @@ npx prisma db seed
 | Create Restaurant | ✅ Any Country | ✅ Own Country | ❌ |
 | Delete Restaurant | ✅ | ✅ | ❌ |
 | Manage Menu Items | ✅ | ✅ | ❌ |
-| Update Payment Methods | ✅ | ✅ | ✅ |
+| Update Payment Methods | ✅ | ✅ | ❌ |
 
 ## 🎥 Demo Workflow
 
