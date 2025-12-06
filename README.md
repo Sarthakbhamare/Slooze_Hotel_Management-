@@ -1,8 +1,42 @@
-# Food Ordering App with Role-Based Access Control (RBAC)
+# Food Ordering Application - Full Stack RBAC System
 
-A full-stack food ordering application with comprehensive Role-Based Access Control and country-based data segregation.
+A complete full-stack food ordering application demonstrating Role-Based Access Control (RBAC) with country-based data segregation.
+
+## 🚀 Live Deployment
+
+- **Frontend (Vercel):** https://slooze-hotel-management.vercel.app/
+- **Backend API (Railway):** https://sloozehotelmanagement-production.up.railway.app/api
+- **GitHub Repository:** https://github.com/Sarthakbhamare/Slooze_Hotel_Management-
+
+## 🚀 Local Development
+
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:3001/api
+- **Prisma Studio**: http://localhost:51212
 
 ## 🎯 Features
+
+### ✅ Completed Features
+
+#### Backend (NestJS)
+✅ Role-Based Access Control with 3 roles (ADMIN, MANAGER, MEMBER)  
+✅ Country-based data segregation (INDIA, AMERICA)  
+✅ JWT Authentication with Passport  
+✅ Complete REST API with all modules  
+✅ PostgreSQL database via Prisma Cloud  
+✅ Database seeding with test data  
+✅ RBAC Guards and Decorators  
+✅ Input validation and security  
+
+#### Frontend (Next.js)
+✅ Login page with quick-login buttons  
+✅ Protected dashboard with role-based UI  
+✅ Restaurants page with country filtering  
+✅ Menu browsing and cart functionality  
+✅ Orders page with status management  
+✅ Payment method management  
+✅ Authentication context with JWT storage  
+✅ Responsive design with Tailwind CSS  
 
 ### Role-Based Access Control
 - **Admin**: Full access to all restaurants, orders, and management features across all countries
@@ -163,39 +197,48 @@ Click on any user card to quick login, or type credentials manually:
 ```
 Slooz Assignment/
 ├── README.md                    # This file - complete guide
-├── API_DOCUMENTATION.md         # All API endpoints
+├── API_COLLECTION.md            # All API endpoints
 ├── ARCHITECTURE.md              # System design and architecture
 │
 ├── backend/                     # Backend application
 │   ├── src/
 │   │   ├── auth/               # Login, JWT authentication
+│   │   ├── users/              # User management
 │   │   ├── restaurants/        # Restaurant & menu CRUD
+│   │   ├── menu/               # Menu item management
 │   │   ├── orders/             # Order management
 │   │   ├── payment-methods/    # Payment handling
+│   │   ├── common/
+│   │   │   ├── guards/         # RolesGuard for RBAC
+│   │   │   └── decorators/     # @Roles, @CurrentUser
 │   │   └── prisma/             # Database service
 │   ├── prisma/
 │   │   ├── schema.prisma       # Database structure
-│   │   └── seed.ts             # Test data
+│   │   ├── prisma.config.ts    # Database connection config
+│   │   └── seed.ts             # Test data (6 users, 4 restaurants, 32 menu items)
 │   ├── package.json
 │   └── .env (auto-generated)
 │
 ├── frontend/                    # Frontend application
 │   ├── app/
-│   │   ├── page.tsx            # Login page
-│   │   ├── dashboard/          # Main app pages
-│   │   │   ├── page.tsx        # Dashboard home
-│   │   │   ├── restaurants/    # Browse & order
-│   │   │   ├── orders/         # Order history
-│   │   │   └── manage/         # Admin/Manager tools
-│   │   └── layout.tsx          # App layout
+│   │   ├── page.tsx            # Login page with quick-login
+│   │   ├── layout.tsx          # Root layout with AuthProvider
+│   │   └── dashboard/          # Main app pages
+│   │       ├── page.tsx        # Dashboard home with permissions
+│   │       ├── restaurants/    # Browse & order
+│   │       ├── orders/         # Order history & management
+│   │       ├── manage/         # Admin/Manager tools
+│   │       └── payment-methods/ # Payment management
 │   ├── contexts/
 │   │   └── AuthContext.tsx     # User authentication state
 │   ├── lib/
 │   │   └── api.ts              # API calls to backend
+│   ├── types/
+│   │   └── index.ts            # TypeScript types
 │   ├── package.json
 │   └── .env.local
 │
-└── postman_collection.json      # API testing collection
+└── API_TESTING_GUIDE.md         # API testing documentation
 ```
 
 ## 🔑 API Endpoints Overview
@@ -234,9 +277,9 @@ Slooz Assignment/
 - **payment_methods** - User payment cards
 
 ### Sample Data (Auto-created by seed)
-- 6 test users (2 admins, 2 managers, 2 members)
+- 6 test users (1 admin, 2 managers, 3 members)
 - 4 restaurants (2 in India, 2 in America)
-- 16 menu items
+- 32 menu items (8 per restaurant with varied categories)
 - 6 payment methods (one per user)
 
 ## 🛠️ Development Tools
@@ -308,11 +351,11 @@ npx prisma db seed
 
 ## 📊 Access Control Matrix
 
-| Function | Admin | Manager | Member |
+| Function | ADMIN | MANAGER | MEMBER |
 |----------|-------|---------|--------|
-| View All Restaurants | ✅ All Countries | ✅ Own Country | ✅ Own Country |
-| Create Order | ✅ | ✅ | ✅ |
-| Place Order | ✅ | ✅ | ✅ |
+| View Restaurants & Menu Items | ✅ All Countries | ✅ Own Country | ✅ Own Country |
+| Create Order (Add Items) | ✅ | ✅ | ✅ |
+| Place Order (Checkout & Pay) | ✅ | ✅ | ✅ |
 | Cancel Order | ✅ | ✅ | ❌ |
 | Update Order Status | ✅ | ✅ | ❌ |
 | Create Restaurant | ✅ Any Country | ✅ Own Country | ❌ |
@@ -393,22 +436,19 @@ For your assignment submission, include:
 - Or ZIP file with complete project
 
 ✅ **Documentation** (all included in this repo)
-- README.md (this file)
-- API_DOCUMENTATION.md (API endpoints)
-- ARCHITECTURE.md (system design)
-- Postman collection (API testing)
+- README.md (this file - complete setup guide)
+- API_COLLECTION.md (all API endpoints with examples)
+- ARCHITECTURE.md (system design with ERD diagrams)
 
-✅ **Demo Video**
-- Screen recording showing:
-  - Login as different roles
-  - Country-based filtering
-  - Creating orders
-  - Managing restaurants
-  - Order status updates
+✅ **Demo Video or Live Deployment**
+- Live Frontend: https://slooze-hotel-management.vercel.app/
+- Live Backend API: https://sloozehotelmanagement-production.up.railway.app/api
+- Screen recording (can be provided upon request)
 
 ✅ **Datasets**
 - Seed data is in `backend/prisma/seed.ts`
-- Includes 6 users, 4 restaurants, 16 menu items
+- Includes 6 users, 4 restaurants, 32 menu items
+- Comprehensive test data for all features
 
 ## 🎓 For Complete Beginners
 
