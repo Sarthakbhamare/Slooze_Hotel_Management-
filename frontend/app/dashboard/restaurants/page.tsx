@@ -245,7 +245,7 @@ export default function RestaurantsPage() {
                   className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
                 >
                   Back to Restaurants
-                </button>
+                 </button>
               </div>
             </div>
 
@@ -280,14 +280,14 @@ export default function RestaurantsPage() {
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => removeFromCart(item.id)}
-                            className="px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                            className="px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 font-bold text-lg"
                           >
                             -
                           </button>
-                          <span className="font-semibold text-lg">{quantity}</span>
+                          <span className="font-bold text-xl text-gray-900 min-w-[2rem] text-center">{quantity}</span>
                           <button
                             onClick={() => addToCart(item.id)}
-                            className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                            className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 font-bold text-lg"
                           >
                             +
                           </button>
@@ -318,7 +318,7 @@ export default function RestaurantsPage() {
                     <select
                       value={selectedPaymentMethod}
                       onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                     >
                       {paymentMethods.map((method) => (
                         <option key={method.id} value={method.id}>
@@ -342,7 +342,7 @@ export default function RestaurantsPage() {
                   })}
                 </div>
                 <div className="border-t pt-4 mb-4">
-                  <div className="flex justify-between text-xl font-bold">
+                  <div className="flex justify-between text-xl font-bold text-gray-900">
                     <span>Total</span>
                     <span>${getTotalPrice().toFixed(2)}</span>
                   </div>
